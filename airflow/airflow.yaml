@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  # app name
+  name: airflow
+  # deployed yaml
+  namespace: cicd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/airflow-helm/charts'
+    path: charts/airflow
+    targetRevision: HEAD
+    helm:
+      parameters:
+        - name: 'dags.gitSync.enabled'
+          value: 'true'
+        - name: 'dags.gitSync.repo'
+          value: 'https://github.com/ifpb/airflow-dags.git'
+        - name: 'dags.gitSync.branch'
+          value: 'main'
+      values: |
+        airflow:
+          extraPipPackages:
+            - minio
+            - pandas
+
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: orchestrator
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

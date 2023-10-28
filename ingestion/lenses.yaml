@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  # app name
+  name: lenses
+  # deployed yaml
+  namespace: cicd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/lensesio/lenses-helm-charts'
+    path: charts/lenses
+    targetRevision: HEAD
+    helm:
+      parameters:
+        - name: 'fullnameOverride'
+          value: 'lenses'
+        - name: 'resources.requests.memory'
+          value: '512Mi'
+        - name: 'resources.requests.cpu'
+          value: '0.5'
+      values: |
+        lenses:
+          additionalEnv:
+            - name: "EULA"
+              value: "https://licenses.lenses.io/d/?id=bb09fbf0-5cf0-11ee-9f0f-42010af01003"
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: ingestion
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  # app name
+  name: minio
+  # deployed yaml
+  namespace: cicd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/minio/minio'
+    path: 'helm/minio'
+    targetRevision: RELEASE.2023-09-20T22-49-55Z
+    helm:
+      parameters:
+        - name: 'fullnameOverride'
+          value: 'minio'
+        - name: 'resources.requests.memory'
+          value: '512Mi'
+        - name: 'replicas'
+          value: '1'
+        - name: 'persistence.enabled'
+          value: 'false'
+        - name: 'mode'
+          value: 'standalone'
+        - name: 'rootUser'
+          value: 'root'
+        - name: 'rootPassword'
+          value: 'minio123'
+
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: datalake
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
