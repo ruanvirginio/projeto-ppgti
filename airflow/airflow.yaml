@@ -16,7 +16,7 @@ spec:
         - name: 'dags.gitSync.enabled'
           value: 'true'
         - name: 'dags.gitSync.repo'
-          value: 'https://github.com/ifpb/airflow-dags.git'
+          value: 'https://github.com/ruanvirginio/airflow.git'
         - name: 'dags.gitSync.branch'
           value: 'main'
       values: |
