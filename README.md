@@ -5,7 +5,13 @@ Pré-requisitos:
 * Docker desktop instalado (windows: https://docs.docker.com/desktop/install/windows-install, linux: https://docs.docker.com/desktop/install/linux-install/)
 * Minikube instalado (https://minikube.sigs.k8s.io/docs/start/)
 * Helm instalado (https://helm.sh/docs/intro/install/)
+* Instale o Argo CLI (https://github.com/argoproj/argo-cd/blob/master/docs/cli_installation.md) (Adapte pro seu caminho, aqui to usando pro Linux)
 
+```
+curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
+rm argocd-linux-amd64
+```
 
 Com o Docker desktop rodando, abra o terminal e execute o comando:
 
@@ -52,14 +58,6 @@ echo $password
 7. Adicione a permissão ao Argo para gerenciar recursos no cluster:
 ```
 kubectl create clusterrolebinding cluster-admin-binding --clusterrole=cluster-admin --user=system:serviceaccount:cicd:argocd-application-controller -n cicd
-```
-
-7.5 Instale o Argo CLI (conforme documentação em https://github.com/argoproj/argo-cd/blob/master/docs/cli_installation.md) (Adapte pro seu caminho, aqui to usando pro Linux)
-
-```
-curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
-sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
-rm argocd-linux-amd64
 ```
 
 8. Adicione o cluster do minikube como cluster gerenciado pelo argo
