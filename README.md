@@ -97,49 +97,6 @@ kubectl port-forward svc/minio 9000:9000 -n datalake & kubectl port-forward svc/
 
 > Acesse a interface do minio em http://localhost:9001 e faça login com usuário root e senha minio123
 
-## Subindo o Kafka (Ingestion)
-1. Crie o namespace "ingestion" no cluster kubernetes do Minikube:
-```
-kubectl create namespace ingestion
-```
-
-2. Instale o Strimzi (https://strimzi.io/) operator via Argo para faciltiar o gerenciamento do Kafka no cluster do minikube:
-```
-kubectl apply -f ingestion/strimzi.yaml
-```
-
-3. Após a instalaçao do strimzi ser finalizada (acompanhe via Argo), instale o kafka via Strimzi:
-```
-kubectl apply -f ingestion/kafka/kafka-ephemeral.yaml -n ingestion
-```
-
-4. Para facilitar a visualização dos dados do Kafka, instale o lenses via Argo:
-```
-kubectl apply -f ingestion/lenses.yaml
-```
-
-5. Quando a instalação do lenses finalizar, faça port-forward do lenses para poder ter acesso à sua interface gráfica via navegador: 
-```
-kubectl port-forward svc/lenses 8000:80 -n ingestion
-```
-
-6. Entre na interface do Lenses via http://localhost:8000 (usuário/senha: admin) e faça a configuração inicial de acesso ao Kafka:
-- Kafka Brokers: Bootstrap servers: kafka-kafka-bootstrap:9092, Security Protocol: TEXTPLAIN, 
-- License: Cole o conteúdo do arquivo baixado aqui: https://licenses.lenses.io/d/?id=bb09fbf0-5cf0-11ee-9f0f-42010af01003
-
-7. Faça port-forward do kafka para poder ter acesso à sua interface de conexão via código:
-```
-kubectl port-forward svc/kafka-kafka-bootstrap 9094:9094 -n ingestion
-```
-
-8. Crie o tópico users-json:
-```
-kubectl apply -f ingestion/kafka/topic.yaml -n ingestion
-```
-
-
-> Acesse a interface gráfica do lenses em http://localhost:8000 e faça login com usuário admin e senha admin
-
 ## Subindo Airflow (Orchestration)
 1. Crie o namespace "orchestration" no cluster kubernetes do Minikube:
 ```
