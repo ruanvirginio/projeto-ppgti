@@ -109,3 +109,4 @@ kubectl apply -f airflow/airflow.yaml
 ```
 kubectl port-forward svc/airflow-web 8001:8080 -n orchestrator
 ```
+Fazer login em http://localhost:8001/ com usuário/senha admin.
