@@ -118,7 +118,7 @@ kubectl port-forward svc/airflow-web 8001:8080 -n orchestrator
 > Ao entrar, ir para Admin > Connections e preencher com as seguintes informações:
 * Connection Id: minio
 * Connection Type: Generic
-* Host: datalake.minio.svc.cluster.local
+* Host: minio.datalake.svc.cluster.local
 * Login/Password: Login e Senha do Minio
 * Port: 9000
 
