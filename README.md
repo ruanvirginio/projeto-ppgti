@@ -1,4 +1,14 @@
-Subindo ambiente do minikube 
+## Otimização da Rede Elétrica: Integração de Dados de Descargas Atmosféricas e Interrupções de Energia para a Identificação de Pontos de Instalação de Para-raios na Distribuição de Energia
+
+Projeto da disciplina de Integração de Dados, do Mestrado Profisisonal em Tecnologia da Informação. PPGTI-IFPB.
+
+Grupo do projeto:
+Raisa Gomes Ponce de Carvalho Rocha
+Ruan Carlos Virginio dos Santos
+Ruanney Nascimento Costa de Almeida
+
+
+## Subindo ambiente do minikube 
 
 Pré-requisitos:
 * Git Instalado (https://git-scm.com/book/pt-br/v2/Começando-Instalando-o-Git)
@@ -14,20 +24,14 @@ rm argocd-linux-amd64
 ```
 
 Com o Docker desktop rodando, abra o terminal e execute o comando:
-
+```
 minikube start --driver=docker --cpus=2 --memory=3863
+```
 
 * Ajuste a quantidade de memória/cpu de acordo com o disponível na sua máquina
 
-
-## Fazendo clone do projeto Big data pipeline
-Rode o comando 
-```
-git clone https://github.com/ruanvirginio/projeto-ppgti.git
-```
-
 ## Subindo o Argo (CI/CD)
-1. Abra o projeto big-data-pipeline no terminal e entre no diretório "cicd". 
+1. Abra o projeto projeto-ppgti no terminal e entre no diretório "cicd". 
 2. Crie o namespace "cicd" no cluster kubernetes do Minikube:
 ```
 kubectl create namespace cicd
@@ -67,7 +71,7 @@ CLUSTER="minikube"
 argocd cluster add $CLUSTER --in-cluster
 ```
 
-9. Adicione o repositório big-data-pipeline como gerenciado pelo argo. Isso fará com que o Argo aplique automaticamente atualizações enviadas ao repositório.
+9. Adicione o repositório projeto-ppgti como gerenciado pelo argo. Isso fará com que o Argo aplique automaticamente atualizações enviadas ao repositório.
 ```
 REPOSITORY="git@github.com:ruanvirginio/projeto-ppgti.git"
 argocd repo add $REPOSITORY --ssh-private-key-path ~/.ssh/id_rsa
@@ -109,4 +113,13 @@ kubectl apply -f airflow/airflow.yaml
 ```
 kubectl port-forward svc/airflow-web 8001:8080 -n orchestrator
 ```
-Fazer login em http://localhost:8001/ com usuário/senha admin.
+> Acesse a interface em http://localhost:8001/ com usuário/senha admin. 
+
+> Ao entrar, ir para Admin > Connections e preencher com as seguintes informações:
+* Connection Id: minio
+* Connection Type: Generic
+* Host: datalake.minio.svc.cluster.local
+* Login/Password: Login e Senha do Minio
+* Port: 9000
+
+Após isso, salve e volte para as DAGs e atualize a página. Rode a DAG e aguarde os resultados.
