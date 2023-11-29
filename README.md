@@ -3,8 +3,8 @@
 Projeto da disciplina de Integração de Dados, do Mestrado Profisisonal em Tecnologia da Informação. PPGTI-IFPB.
 
 Grupo do projeto:
-Raisa Gomes Ponce de Carvalho Rocha
-Ruan Carlos Virginio dos Santos
+Raisa Gomes Ponce de Carvalho Rocha  
+Ruan Carlos Virginio dos Santos  
 Ruanney Nascimento Costa de Almeida
 
 
